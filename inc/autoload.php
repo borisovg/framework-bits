@@ -1,5 +1,9 @@
 <?php
 
+// Simple autoloader which to load classes from lib/ directory. Group namespaces in separate sub-directories.
+//
+// Most of this code was shamelessly stolen from https://github.com/alexborisov ;-)
+
 if (!defined('ROOT_PATH')) {
 	define('ROOT_PATH', realpath(dirname(__FILE__) . '/../'));
 }
@@ -8,7 +12,6 @@ spl_autoload_register(
 	function ($className) {
 		$className = ltrim($className, '\\');
 		// dirty hack to allow separate folders for namespaces
-		// actually this seems to be the exact way PSR-0 does it :P -a.
 		$className = str_replace('\\', '/', $className);
 
 		$path = ROOT_PATH . "/lib/{$className}.php";
