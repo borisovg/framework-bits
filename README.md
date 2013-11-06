@@ -16,8 +16,8 @@ lib/Config.php
 
 This class will read configuration files from the config/ directory (config.php and local\_config.php by default).
 
-null Config::load('fileName') - merge configuration from file<br>
-string Config::get('key') - get a configuration item, or false if item not found
+null Config::load(string $fileName) - merge configuration from file<br>
+string Config::get(string $key) - get a configuration item, or false if item not found
 
 ## MySQL wrapper module
 
