@@ -33,6 +33,17 @@ lib/Auth.php - 'frontent' class, extends the 'database' class, allows for modula
 lib/Auth\_DB.php - 'database' class (MySQL), extends 'base' class, uses the Config and DB classes<br>
 lib/Auth\_Base.php - 'base' class
 
+Passwords are stored as individually-salted SHA256 hashes.
+
+The MySQL version expects the following table to exist:
+ 
+	CREATE TABLE IF NOT EXISTS `auth` (
+	  `user` varchar(64) NOT NULL,
+	  `hash` varchar(64) NOT NULL,
+	  `is_admin` tinyint(1) DEFAULT NULL,
+	  PRIMARY KEY (`user`)
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 array Auth::changePassword(string $username, string $password) - change password<br>
 array Auth::login(string $username, string $password, bool $reloadPage = true) - attempts to login and optionally reloads the page<br>
 array Auth::newUser(string $username, string $password, bool $isAdmin) - add a new user<br>
