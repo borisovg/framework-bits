@@ -27,7 +27,7 @@ Extends 'mysqli' class.
 Uses the Config class to read database configuration and create a connection.
 Provides a number of additional helper methods to simplify working with MySQL responses.
 
-DB::\_\_construct(string $type = 'ro') - the type parameter defines with set of credentials to use (e.g: ['mysql']['auth']['ro'])
+DB::\_\_construct(string $type = 'ro') - the $type parameter defines which set of credentials to use from configuration file (e.g: ['mysql']['auth']['ro'])
 
 ## Authentication module
 
