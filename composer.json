@@ -1,0 +1,11 @@
+{
+	"name": "borisovg/framework-bits",
+	"authors": [
+		{
+			"name": "George Borisov",
+			"email": "git@gir.me.uk",
+			"homepage": "http://gir.me.uk/"
+		}
+	],
+	"license": "AGPL-3.0"
+}
