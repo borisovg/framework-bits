@@ -4,10 +4,6 @@
 //
 // Author: George Borisov <george@gir.me.uk>
 
-if (!class_exists('Auth_Base')) {
-	require ROOT_PATH . '/_php/Auth_Base.php';
-}
-
 if (!file_exists(ROOT_PATH . Config::get('auth_file'))) {
 	exit ("ERROR: auth file not found");
 }
@@ -64,7 +60,7 @@ class Auth_File extends Auth_Base
 		}
 	}
 
-	private function load() {
+	private static function load() {
 		if ($a = file_get_contents(ROOT_PATH . Config::get('auth_file'))) {
 			$a = json_decode($a, true);
 		} else {
@@ -73,7 +69,7 @@ class Auth_File extends Auth_Base
 		return $a;
 	}
 
-	private function save($a) {
+	private static function save($a) {
 		if (file_put_contents(ROOT_PATH . Config::get('auth_file'), json_encode($a, JSON_PRETTY_PRINT)) === false) {
 			$a_return = ['code' => 500, 'error' => 'Unable to write to DB file'];
 

@@ -111,7 +111,7 @@ abstract class Auth_Base
 	}
 
 	public static function getUserName() {
-		if (self::isAuthenticated()) {
+		if (static::isAuthenticated()) {
 			return $_SESSION['userName'];
 		} else {
 			return false;
@@ -124,6 +124,23 @@ abstract class Auth_Base
 		} else {
 			return false;
 		}
+	}
+
+	public static function userExists($u) {
+		$a_return = [];
+
+		if (static::usernameIsLegal($u)) {
+			if (static::getUser($u)) {
+				$a_return = ['code' => 200];
+			} else {
+				$a_return = ['code' => 404, 'error' => 'User does not exist'];
+			}
+		} else {
+			static::destroySession();
+			$a_return = ['code' => 400, 'error' => 'Illegal username'];
+		}
+
+		return $a_return;
 	}
 
 	// Private Methods //
@@ -196,22 +213,5 @@ abstract class Auth_Base
 			}
 			 unset ($_SESSION['post_data']);
 		} 
-	}
-
-	protected static function userExists($u) {
-		$a_return = [];
-
-		if (static::usernameIsLegal($u)) {
-			if (static::getUser($u)) {
-				$a_return = ['code' => 200];
-			} else {
-				$a_return = ['code' => 404, 'error' => 'User does not exist'];
-			}
-		} else {
-			static::destroySession();
-			$a_return = ['code' => 400, 'error' => 'Illegal username'];
-		}
-
-		return $a_return;
 	}
 }
