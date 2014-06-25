@@ -1,5 +1,7 @@
 <?php
 
+namespace Borisov;
+
 if (!defined('ROOT_PATH')) {
 	define('ROOT_PATH', realpath(dirname(__FILE__) . '/../'));
 }
