@@ -4,9 +4,10 @@
 //
 // Author: George Borisov <george@gir.me.uk>
 
-namespace Borisov;
+namespace Borisov\DB;
+use PDO;
 
-class DB_Base extends PDO
+class Base extends PDO
 {
 	public function __construct($target, $user, $pass, $opt = []) {
 		if (!isset ($opt[PDO::ATTR_ERRMODE])) {

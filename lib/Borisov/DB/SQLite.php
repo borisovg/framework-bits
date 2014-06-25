@@ -4,9 +4,9 @@
 //
 // Author: George Borisov <george@gir.me.uk>
 
-namespace Borisov;
+namespace Borisov\DB;
 
-final class DB_SQLite extends DB_Base
+final class SQLite extends Base
 {
 	public function __construct ($file = '', $opt = []) {
 		if (!$file) {
