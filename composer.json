@@ -9,5 +9,10 @@
 			"email": "git@gir.me.uk",
 			"homepage": "http://gir.me.uk/"
 		}
-	]
+	],
+	"autoload": {
+		"psr-0": {
+			"GB\\": "lib/"
+		}
+	}
 }
