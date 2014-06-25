@@ -1,11 +1,13 @@
 {
 	"name": "borisovg/framework-bits",
+	"description": "Assorted framework bits and pieces",
+	"homepage": "https://github.com/borisovg/framework-bits",
+	"license": "AGPL-3.0",
 	"authors": [
 		{
 			"name": "George Borisov",
 			"email": "git@gir.me.uk",
 			"homepage": "http://gir.me.uk/"
 		}
-	],
-	"license": "AGPL-3.0"
+	]
 }
