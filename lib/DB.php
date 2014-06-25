@@ -20,7 +20,7 @@ class DB extends mysqli
 				printf("Connect failed: %s\n", mysqli_connect_error());
 				exit;
 			}
-			$this->q('SET NAMES utf8');
+			$this->set_charset('utf8');
 		} else {
 			exit ("500: Bad configuration\n");
 		}
