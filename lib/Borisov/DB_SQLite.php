@@ -4,6 +4,8 @@
 //
 // Author: George Borisov <george@gir.me.uk>
 
+namespace Borisov;
+
 final class DB_SQLite extends DB_Base
 {
 	public function __construct ($file = '', $opt = []) {

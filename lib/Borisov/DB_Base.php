@@ -4,6 +4,8 @@
 //
 // Author: George Borisov <george@gir.me.uk>
 
+namespace Borisov;
+
 class DB_Base extends PDO
 {
 	public function __construct($target, $user, $pass, $opt = []) {

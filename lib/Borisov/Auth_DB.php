@@ -4,6 +4,8 @@
 //
 // Author: George Borisov <george@gir.me.uk>
 
+namespace Borisov;
+
 class Auth_DB extends Auth_Base
 {
 	protected static $db = [];

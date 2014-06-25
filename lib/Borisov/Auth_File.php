@@ -4,6 +4,8 @@
 //
 // Author: George Borisov <george@gir.me.uk>
 
+namespace Borisov;
+
 if (!file_exists(ROOT_PATH . Config::get('auth_file'))) {
 	exit ("ERROR: auth file not found");
 }

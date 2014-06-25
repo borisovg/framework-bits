@@ -4,6 +4,8 @@
 //
 // Author: George Borisov <george@gir.me.uk>
 
+namespace Borisov;
+
 session_start();
 
 abstract class Auth_Base
