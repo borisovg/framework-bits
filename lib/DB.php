@@ -204,6 +204,7 @@ class DB extends mysqli
 		}
 		$this->sql_errors .= "### MYSQL ERROR ###\n";
 		$this->sql_errors .= $this->error."\n\n";
+		http_response_code(500);
 	}
 	
 	private function warningHandler($sql, $a_warnings) {
