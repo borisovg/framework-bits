@@ -39,8 +39,3 @@ Config::load();
 // * anything not suitable for Github (like credentials)
 // * configuration overrides, e.g. changing DB server to localhost
 Config::load('local_config.php');
-
-// debug logging
-if (Config::get('debug')) {
-	error_reporting(E_ALL);
-}
