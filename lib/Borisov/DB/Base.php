@@ -9,7 +9,7 @@ use PDO;
 
 class Base extends PDO
 {
-	public function __construct($target, $user, $pass, $opt = []) {
+	public function __construct ($target, $user, $pass, $opt = []) {
 		if (!isset ($opt[PDO::ATTR_ERRMODE])) {
 			//if (Config::get('debug')) {
 			$opt[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;	// throw exceptions for all errors
@@ -27,7 +27,7 @@ class Base extends PDO
 
 	// Sugar :-)
 
-	public function get($s, $mode = PDO::FETCH_ASSOC) {
+	public function get ($s, $mode = PDO::FETCH_ASSOC) {
 		$r = false;
 		// accept a PDOStatement object or an SQL query string
 		if (!$s instanceof PDOStatement) {
@@ -37,10 +37,10 @@ class Base extends PDO
 			$r = $s->fetchAll($mode);
 		}
 		$s->closeCursor();
-		return $r;
+		 return $r;
 	}
 
-	public function getRow($s) {
+	public function getRow ($s) {
 		$r = false;
 		// accept a PDOStatement object or an SQL query string
 		if (!$s instanceof PDOStatement) {
@@ -53,7 +53,7 @@ class Base extends PDO
 		return $r;
 	}
 
-	public function getColumn($s) {
+	public function getColumn ($s) {
 		$r = false;
 		// accept a PDOStatement object or an SQL query string
 		if (!$s instanceof PDOStatement) {
@@ -69,7 +69,7 @@ class Base extends PDO
 		return $r;
 	}
 
-	public function getOne($s) {
+	public function getOne ($s) {
 		$r = false;
 		// accept a PDOStatement object or an SQL query string
 		if (!$s instanceof PDOStatement) {
@@ -84,7 +84,7 @@ class Base extends PDO
 		return $r;
 	}
 	
-	function getTuple($s) {
+	public function getTuple ($s) {
 		$r = false;
 		// accept a PDOStatement object or an SQL query string
 		if (!$s instanceof PDOStatement) {
