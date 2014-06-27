@@ -5,6 +5,7 @@
 // Author: George Borisov <george@gir.me.uk>
 
 namespace Borisov\DB;
+use Borisov\Config;
 
 final class SQLite extends Base
 {
@@ -14,6 +15,6 @@ final class SQLite extends Base
 				$this->error('Missing configuration');	
 			}
 		}
-		parent::__construct('sqlite:' . $file, false, false, $opt);
+		parent::__construct('sqlite:' . ROOT_PATH . $file, false, false, $opt);
 	}
 }
