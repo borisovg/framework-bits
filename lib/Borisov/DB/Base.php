@@ -100,9 +100,42 @@ class Base extends PDO
 		return $r;
 	}
 
+	public function transaction ($a) {
+		try {
+			$this->beginTransaction();
+			
+			foreach ($a as $sql) {
+				$this->exec($sql);
+			}
+			
+			$this->commit();
+
+		} catch (Exception $e) {
+			$this->rollBack();
+			throw $e;
+		}
+	}
+
+	public function insert ($table, $a, $suffix = '') {
+		foreach ($a as $k => $v) {
+			if (!is_numeric($v) && $v) {
+				$a[$k] = "'$v'";
+
+			} else {
+				$a[$k] = 'NULL';
+			}
+		}
+
+		$sql = "INSERT INTO $table ('" . implode("','", array_keys($a)) . "') VALUES (" . implode (',', $a) . ") $suffix"; 
+
+		$s = $this->prepare($sql);
+		$s->execute();
+		$s->closeCursor();
+	}
+
 	// Internal functions
 
-	protected function error($message, $code = 500) {
+	protected function error ($message, $code = 500) {
 		http_response_code(500);
 		exit ("$code: $message\n");
 	}
