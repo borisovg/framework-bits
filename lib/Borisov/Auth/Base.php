@@ -4,11 +4,11 @@
 //
 // Author: George Borisov <george@gir.me.uk>
 
-namespace Borisov;
+namespace Borisov\Auth;
 
 session_start();
 
-abstract class Auth_Base
+abstract class Base
 {
 	// LSB Methods //
 

@@ -4,13 +4,15 @@
 //
 // Author: George Borisov <george@gir.me.uk>
 
-namespace Borisov;
+namespace Borisov\Auth;
+
+use \Borisov\Config;
 
 if (!file_exists(ROOT_PATH . Config::get('auth_file'))) {
 	exit ("ERROR: auth file not found");
 }
 
-class Auth_File extends Auth_Base
+class AuthFile extends Base
 {
 	public static function changePassword($u, $p) {
 		$a_return = [];

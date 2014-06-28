@@ -4,9 +4,11 @@
 //
 // Author: George Borisov <george@gir.me.uk>
 
-namespace Borisov;
+namespace Borisov\Auth;
 
-class Auth_DB extends Auth_Base
+use \Borisov\DB\DB;
+
+class AuthDB extends Base
 {
 	protected static $db = [];
 
