@@ -6,6 +6,8 @@
 
 namespace Borisov\Auth;
 
+use \Borisov\Config;
+
 session_start();
 
 abstract class Base
