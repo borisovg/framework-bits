@@ -118,11 +118,13 @@ class Base extends PDO
 
 	public function insert ($table, $a, $suffix = '') {
 		foreach ($a as $k => $v) {
-			if (!is_numeric($v) && $v) {
-				$a[$k] = "'$v'";
+			if (!is_numeric($v)) {
+				if ($v) {
+					$a[$k] = "'$v'";
 
-			} else {
-				$a[$k] = 'NULL';
+				} else {
+					$a[$k] = 'NULL';
+				}
 			}
 		}
 
