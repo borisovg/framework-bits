@@ -135,6 +135,35 @@ class Base extends PDO
 		$s->closeCursor();
 	}
 
+	public function update ($table, $a, $conditions) {
+		$data = [];
+
+		foreach ($a as $k => $v) {
+			if (!is_numeric($v)) {
+				if ($v) {
+					$data[] = "$k='$v'";
+
+				} else {
+					$data[] = "$k=NULL";
+				}
+
+			} else {
+				$data[] = "$k=$v";
+			}
+		}
+
+		$where = [];
+		foreach ($conditions as $k => $v) {
+			$where[] = "$k='$v'";
+		}
+
+		$sql = "UPDATE $table SET " . implode(',', $data) . ' WHERE ' . implode(' AND ', $where); 
+		
+		$s = $this->prepare($sql);
+		$s->execute();
+		$s->closeCursor();
+	}
+
 	// Internal functions
 
 	protected function error ($message, $code = 500) {
