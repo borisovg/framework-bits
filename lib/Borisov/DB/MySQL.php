@@ -5,6 +5,7 @@
 // Author: George Borisov <george@gir.me.uk>
 
 namespace Borisov\DB;
+use Borisov\Config;
 
 class MySQL extends Base
 {
