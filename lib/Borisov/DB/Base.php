@@ -133,6 +133,8 @@ class Base extends PDO
 		$s = $this->prepare($sql);
 		$s->execute();
 		$s->closeCursor();
+
+		return $this->lastInsertId();
 	}
 
 	public function update ($table, $a, $conditions) {
