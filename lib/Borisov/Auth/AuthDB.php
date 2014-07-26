@@ -62,8 +62,9 @@ class AuthDB extends Base
 	}
 
 	protected static function getUser($user) {
-		$db = self::getDB();
-		$user = $db->real_escape_string(strtolower($user));
-		return $db->get_row("SELECT hash, is_admin FROM auth WHERE user='{$user}'");
+		if (self::usernameIsLegal($user)) {
+			$db = self::getDB();
+			return $db->get_row("SELECT hash, is_admin FROM auth WHERE user='{$user}'");
+		}
 	}
 }
