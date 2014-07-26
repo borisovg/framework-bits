@@ -129,7 +129,7 @@ class Base extends PDO
 			}
 		}
 
-		$sql = "INSERT INTO $table ('" . implode("','", array_keys($a)) . "') VALUES (" . implode (',', $a) . ") $suffix"; 
+		$sql = "INSERT INTO $table (" . implode(",", array_keys($a)) . ") VALUES (" . implode (',', $a) . ") $suffix"; 
 
 		$s = $this->prepare($sql);
 		$s->execute();
