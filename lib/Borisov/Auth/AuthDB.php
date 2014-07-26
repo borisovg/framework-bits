@@ -6,7 +6,7 @@
 
 namespace Borisov\Auth;
 
-use \Borisov\DB\DB;
+use \DB;
 
 class AuthDB extends Base
 {

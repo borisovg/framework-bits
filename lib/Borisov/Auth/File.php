@@ -12,7 +12,7 @@ if (!file_exists(ROOT_PATH . Config::get('auth_file'))) {
 	exit ("ERROR: auth file not found");
 }
 
-class AuthFile extends Base
+class File extends Base
 {
 	public static function changePassword($u, $p) {
 		$a_return = [];
