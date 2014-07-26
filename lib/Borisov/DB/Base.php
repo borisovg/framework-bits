@@ -105,7 +105,8 @@ class Base extends PDO
 			$this->beginTransaction();
 			
 			foreach ($a as $sql) {
-				$this->exec($sql);
+				$s = $this->prepare($sql);
+				$s->execute();
 			}
 			
 			$this->commit();
