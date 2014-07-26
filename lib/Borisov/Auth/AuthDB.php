@@ -20,7 +20,7 @@ class AuthDB extends Base
 			$db = self::getDB('rw');
 			$u = strtolower($u);
 			$h = self::makeHash($p);
-			$db->q("UPDATE auth SET hash='$h' WHERE user='$u'");
+			$db->query("UPDATE auth SET hash='$h' WHERE user='$u'");
 			$a_return = ['code' => 200];
 		} else {
 			$a_return = $a;
@@ -45,7 +45,7 @@ class AuthDB extends Base
 			} else {
 				$sql = "INSERT INTO auth (user, hash) VALUES ('$u', '$h')";
 			}
-			$db->q($sql);
+			$db->query($sql);
 			$a_return = ['code' => 200];
 		} else {
 			$a_return = $a;
@@ -64,7 +64,7 @@ class AuthDB extends Base
 	protected static function getUser($user) {
 		if (self::usernameIsLegal($user)) {
 			$db = self::getDB();
-			return $db->get_row("SELECT hash, is_admin FROM auth WHERE user='{$user}'");
+			return $db->getRow("SELECT hash, is_admin FROM auth WHERE user='{$user}'");
 		}
 	}
 }
