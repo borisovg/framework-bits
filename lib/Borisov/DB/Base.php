@@ -177,6 +177,8 @@ class Base extends PDO
 		echo "<pre>";
 		debug_print_backtrace();
 		echo "</pre>";
+
+		exit;
 	}
 
 	protected static function printException ($e) {
