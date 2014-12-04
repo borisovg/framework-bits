@@ -21,7 +21,7 @@ class Base extends PDO
 		try {
 			parent::__construct($target, $user, $pass, $opt);
 		} catch (PDOException $e) {
-			self::exception($e);
+			self::printException($e);
 		}	
 	}
 
@@ -174,14 +174,11 @@ class Base extends PDO
 		exit ("$code: $message");
 	}
 
-	protected static function exception ($e) {
+	protected static function printException ($e) {
 		http_response_code(500);
 
 		echo ("<p>500: {$e->getMessage()}</p>");
-
-		if ($trace) {
-			echo ("<pre>{$e->getTraceAsString()}</pre>");
-		}
+		echo ("<pre>{$e->getTraceAsString()}</pre>");
 
 		exit;
 	}
