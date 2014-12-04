@@ -11,7 +11,7 @@ class MySQL extends Base
 {
 	public function __construct($type = 'ro', $opt = [], $db_name = false) {
 		if (!$a = Config::get('mysql')) {
-			$this->error('Missing configuration');
+			parent::error('Missing configuration');
 		}
 
 		// allow overriding of DB name
@@ -23,7 +23,7 @@ class MySQL extends Base
 			// WARNING: charset option ignored in PHP < 5.3.6
 			parent::__construct("mysql:host={$a['server']};dbname={$a['db']};charset=utf8", $a['auth'][$type]['user'], $a['auth'][$type]['pass'], $opt);
 		} else {
-			$this->error('Bad configuration');
+			parent::error('Bad configuration');
 		}
 	}
 }
