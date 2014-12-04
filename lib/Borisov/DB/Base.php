@@ -171,7 +171,12 @@ class Base extends PDO
 
 	protected static function error ($message, $code = 500) {
 		http_response_code($code);
-		exit ("$code: $message");
+		
+		echo "<p>$code: $message</p>";
+		
+		echo "<pre>";
+		debug_print_backtrace();
+		echo "</pre>";
 	}
 
 	protected static function printException ($e) {
