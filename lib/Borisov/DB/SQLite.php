@@ -15,6 +15,10 @@ class SQLite extends Base
 				$this->error('Missing configuration');	
 			}
 		}
-		parent::__construct('sqlite:' . ROOT_PATH . $file, false, false, $opt);
+		try {
+			parent::__construct('sqlite:' . ROOT_PATH . $file, false, false, $opt);
+		} catch (PDOException $e) {
+			$this->error($e->getMessage());
+		}	
 	}
 }

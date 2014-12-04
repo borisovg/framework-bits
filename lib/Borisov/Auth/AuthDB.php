@@ -56,7 +56,7 @@ class AuthDB extends Base
 
 	protected static function getDB($type = 'ro') {
 		if (!isset (self::$db[$type])) {
-			self::$db[$type] = new DB($type);
+			self::$db[$type] = new \DB($type);
 		}
 		return self::$db[$type];
 	}
