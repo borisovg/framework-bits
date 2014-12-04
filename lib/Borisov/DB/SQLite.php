@@ -7,7 +7,7 @@
 namespace Borisov\DB;
 use Borisov\Config;
 
-final class SQLite extends Base
+class SQLite extends Base
 {
 	public function __construct ($file = '', $opt = []) {
 		if (!$file) {
