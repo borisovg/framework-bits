@@ -8,6 +8,10 @@ namespace Borisov\Auth;
 
 use \Borisov\Config;
 
+if (!Config::get('auth_file')) {
+	exit ("ERROR: missing 'auth_file' config variable");
+}
+
 if (!file_exists(ROOT_PATH . Config::get('auth_file'))) {
 	exit ("ERROR: auth file not found");
 }
