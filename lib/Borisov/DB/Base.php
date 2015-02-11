@@ -118,9 +118,8 @@ class Base extends PDO
 	}
 
 	public function insert ($table, $a, $suffix = '') {
+		$a = array_filter($a, function ($v) { return ($v || is_numeric($v)); });
 		$data = self::prepare_data($a);
-
-		$data = array_filter($data, function ($v) { return ($v !== NULL); });
 
 		$sql = "INSERT INTO $table (" . implode(",", array_keys($a)) . ") VALUES (" . implode (',', array_keys($data)) . ") $suffix"; 
 
