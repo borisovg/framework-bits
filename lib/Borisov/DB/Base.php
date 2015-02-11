@@ -118,52 +118,37 @@ class Base extends PDO
 	}
 
 	public function insert ($table, $a, $suffix = '') {
-		foreach ($a as $k => $v) {
-			if (!is_numeric($v)) {
-				if ($v) {
-					$a[$k] = "'$v'";
+		$data = self::prepare_data($a);
 
-				} else {
-					$a[$k] = 'NULL';
-				}
-			}
-		}
+		$data = array_filter($data, function ($v) { return ($v !== NULL); });
 
-		$sql = "INSERT INTO $table (" . implode(",", array_keys($a)) . ") VALUES (" . implode (',', $a) . ") $suffix"; 
+		$sql = "INSERT INTO $table (" . implode(",", array_keys($a)) . ") VALUES (" . implode (',', array_keys($data)) . ") $suffix"; 
 
 		$s = $this->prepare($sql);
-		$s->execute();
+		$s->execute($data);
 		$s->closeCursor();
 
 		return $this->lastInsertId();
 	}
 
-	public function update ($table, $a, $conditions) {
-		$data = [];
+	public function update ($table, $data, $conditions) {
+		$p_data = self::prepare_data($data);
+		$p_where = self::prepare_data($conditions);
 
-		foreach ($a as $k => $v) {
-			if (!is_numeric($v)) {
-				if ($v) {
-					$data[] = "$k='$v'";
-
-				} else {
-					$data[] = "$k=NULL";
-				}
-
-			} else {
-				$data[] = "$k=$v";
-			}
+		$cols = [];
+		foreach ($data as $k => $v) {
+			$cols[] = ($v === NULL) ? "$k=NULL" : "$k=:$k";
 		}
 
 		$where = [];
 		foreach ($conditions as $k => $v) {
-			$where[] = "$k='$v'";
+			$where[] = "$k=:$k";
 		}
 
-		$sql = "UPDATE $table SET " . implode(',', $data) . ' WHERE ' . implode(' AND ', $where); 
+		$sql = "UPDATE $table SET " . implode(',', $cols) . ' WHERE ' . implode(' AND ', $where); 
 		
 		$s = $this->prepare($sql);
-		$s->execute();
+		$s->execute(array_merge($p_data, $p_where));
 		$s->closeCursor();
 	}
 
@@ -188,5 +173,23 @@ class Base extends PDO
 		echo ("<pre>{$e->getTraceAsString()}</pre>");
 
 		exit;
+	}
+
+	private static function prepare_data ($data) {
+		$a = [];
+
+		foreach ($data as $k => $v) {
+			if (preg_match('/[^\w]/', $k)) {
+				self::error('Invalid characters in column name', 400);
+			}
+
+			if (!$v && !is_numeric($v)) {
+				$v = NULL;
+			}
+
+			$a[":$k"] = $v;
+		}
+
+		return $a;
 	}
 }
