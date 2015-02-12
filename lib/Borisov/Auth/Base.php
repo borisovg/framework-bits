@@ -28,10 +28,11 @@ abstract class Base
 
 	// Public Methods //
 
-	public static function isAuthenticated() {
+	public static function isAuthenticated($saveURI = true) {
 		if (static::sessionExists()) {
 			if (static::sessionIsExpired($_SESSION['expiry'])) {
-				static::expireSession();
+				static::expireSession($saveURI);
+
 			} else {
 				static::updateSessionExpiry(Config::get('auth_session_timeout'));
 				return TRUE;
@@ -163,11 +164,16 @@ abstract class Base
 		return TRUE;
 	}
 
-	protected static function expireSession() {
+	protected static function expireSession($saveURI) {
 		$max_login_retries = 3;
 		
 		$_SESSION['relogon'] = $max_login_retries;
-		$_SESSION['lastURI'] = $_SERVER['REQUEST_URI'];
+
+		// some request URIs should not be saved, e.g. API calls
+		if ($saveURI) {
+			$_SESSION['lastURI'] = $_SERVER['REQUEST_URI'];
+		}
+			
 		if (!empty($_POST)) {
 			$_SESSION['post_data'] = array();
 			foreach ($_POST as $key=>$value) {
