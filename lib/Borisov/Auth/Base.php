@@ -31,9 +31,13 @@ abstract class Base
 	// Public Methods //
 
 	public static function isAuthenticated($saveURI = true) {
+        if ($saveURI) {
+            $_SESSION['lastURI'] = $_SERVER['REQUEST_URI'];
+        }
+
 		if (static::sessionExists()) {
 			if (static::sessionIsExpired($_SESSION['expiry'])) {
-				static::expireSession($saveURI);
+				static::expireSession();
 
 			} else {
 				static::updateSessionExpiry(Config::get('auth_session_timeout'));
@@ -51,17 +55,24 @@ abstract class Base
 		} else {
 			if (static::passwordIsCorrect($pw, $a_user['hash'])) {
 				$success = $user;
+                $lastURI = (isset ($_SESSION['lastURI'])) ? $_SESSION['lastURI'] : $_SERVER['REQUEST_URI'];
 				if (isset ($_SESSION['relogon'])) {
 					unset ($_SESSION['relogon']);
 				} else {
 					static::destroySession();
 					session_start();
+                    $_SESSION['lastURI'] = $lastURI;
 				}
 				$_SESSION['userName'] = $user;
 				static::updateSessionExpiry(Config::get('auth_session_timeout'));
 				if ($a_user['is_admin']) {
 					$_SESSION['is_admin'] = TRUE;
 				}
+
+                if ($reload) {
+                    header("Location: $lastURI");
+                    exit;
+                }
 			} else {
 				if (isset ($_SESSION['relogon'])) {
 					if ($_SESSION['relogon']) {
@@ -75,16 +86,8 @@ abstract class Base
 				}
 			}
 		}
-		if ($reload) {
-			if (isset ($_SESSION['lastURI'])) {
-				header("Location: {$_SESSION['lastURI']}");
-			} else {
-				header("Location: {$_SERVER['REQUEST_URI']}");
-			}
-			exit;
-		} else {
-			return $success;
-		}
+
+		return $success;
 	}
 
 	public static function isAdmin() {
@@ -102,15 +105,11 @@ abstract class Base
 	}
 
 	public static function logout() {
-		if (isset ($_SESSION['lastURI'])) {
-			header("Location: {$_SESSION['lastURI']}");
-		} else {
-			header('Location: /');
-		}
+        $uri = (isset ($_SESSION['lastURI'])) ? $_SESSION['lastURI'] : $_SERVER['REQUEST_URI'];
+        header("Location: $uri");
 		static::destroySession();
 		exit;
 	}
-
 
 	public static function destroySession() {
 		session_unset();
@@ -166,15 +165,10 @@ abstract class Base
 		return TRUE;
 	}
 
-	protected static function expireSession($saveURI) {
+	protected static function expireSession() {
 		$max_login_retries = 3;
 		
 		$_SESSION['relogon'] = $max_login_retries;
-
-		// some request URIs should not be saved, e.g. API calls
-		if ($saveURI) {
-			$_SESSION['lastURI'] = $_SERVER['REQUEST_URI'];
-		}
 			
 		if (!empty($_POST)) {
 			$_SESSION['post_data'] = array();
