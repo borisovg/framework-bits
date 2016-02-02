@@ -100,6 +100,22 @@ class Base extends PDO
 		return $r;
 	}
 
+	public function getIndexed ($s, $col) {
+		$r = false;
+		// accept a PDOStatement object or an SQL query string
+		if (!$s instanceof PDOStatement) {
+			$s = $this->prepare($s);
+		}
+		if ($s->execute()) {
+			$r = [];
+			while ($row = $s->fetch()) {
+				$r[$row[$col]] = $row;
+			}
+		}
+		$s->closeCursor();
+		return $r;
+	}
+
 	public function transaction ($a) {
 		try {
 			$this->beginTransaction();
