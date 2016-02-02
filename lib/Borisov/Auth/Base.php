@@ -8,7 +8,9 @@ namespace Borisov\Auth;
 
 use \Borisov\Config;
 
-session_start();
+if (!session_id()) {
+    session_start();
+}
 
 abstract class Base
 {
