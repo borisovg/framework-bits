@@ -198,9 +198,13 @@ abstract class Base
 		return crypt($p, $s);
 	}
 
-	protected static function makeSalt() {
-		return '$5$'.bin2hex(mcrypt_create_iv(16));
-	}
+    protected static function makeSalt() {
+        if (function_exists('random_bytes')) {
+            return '$5$'.bin2hex(random_bytes(16));
+        } else {
+            return '$5$'.bin2hex(mcrypt_create_iv(16));
+        }
+    }
 
 	// restore post data after session expiry
 	protected static function restorePOST(&$a_vars, &$a_submits) {
